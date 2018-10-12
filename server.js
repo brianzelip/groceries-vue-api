@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const routes = require('./routes');
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
@@ -18,17 +18,11 @@ mongoose.connection.on('error', err => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/', routes);
+
 // import all of our models (data schemas)
 // this is also known as a "singleton" - where express allows you to just require it once at the beginning, and all subsequent files get it from here.
-require('./models/Item');
-
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get('/', function(request, response) {
-  response.sendFile(__dirname + '/views/index.html');
-});
+// require('./Item');
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function() {
