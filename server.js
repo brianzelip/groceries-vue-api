@@ -20,10 +20,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/', routes);
 
-// import all of our models (data schemas)
-// this is also known as a "singleton" - where express allows you to just require it once at the beginning, and all subsequent files get it from here.
-// require('./Item');
-
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function() {
   console.log('Your app is listening on port ' + listener.address().port);
