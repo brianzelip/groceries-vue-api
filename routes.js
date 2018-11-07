@@ -12,7 +12,9 @@ router.post(
   "/submit",
   // itemController.processFormData,
   // itemController.outputGroceryList
-  console.log('SERVER SAYS::: "FORM WAS SUBMITTED!"')
+  function() {
+    console.log('SERVER SAYS::: "FORM WAS SUBMITTED!"');
+  }
 );
 
 module.exports = router;
