@@ -2,14 +2,11 @@ const express = require('express');
 const router = express.Router();
 const controller = require('./controller');
 const { catchErrors } = require('./errorHandlers');
-const cors = require('cors');
 
 router.get('/', controller.home);
 
-router.get('/get', cors(), catchErrors(controller.getAllItems));
+router.get('/get', catchErrors(controller.getAllItems));
 
-router.post('/submit', cors(), function(req, res) {
-  console.log('SERVER SAYS::: "FORM WAS SUBMITTED!"');
-});
+router.post('/submit', controller.submit);
 
 module.exports = router;
