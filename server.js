@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const routes = require('./routes');
+const cors = require('cors');
 
 // import environmental variables from our variables.env file
 require('dotenv').config({ path: 'variables.env' });
@@ -17,6 +18,8 @@ mongoose.connection.on('error', err => {
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(cors());
 
 app.use('/', routes);
 
