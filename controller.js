@@ -12,3 +12,8 @@ exports.getAllItems = async (req, res) => {
   console.log('getAllItems fired!');
   res.json(items);
 };
+
+exports.submit = (req, res) => {
+  console.log('submit fired!');
+  console.log('req.body', req.body, '\nreq.route', req.route);
+};
