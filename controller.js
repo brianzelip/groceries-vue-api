@@ -20,7 +20,7 @@ exports.submit = (req, res) => {
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
-    port: 3535,
+    port: 25,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
@@ -28,12 +28,12 @@ exports.submit = (req, res) => {
   });
 
   let mailOptions = {
-    from: '"🧀 A&B Groceries 🍼" <holler@abbieandbrian.us>',
+    from: '"🤖 groceries-vue" <holler@abbieandbrian.us>',
     to: 'bzelip@gmail.com',
     subject: 'grocery list',
     text:
       'Sorry, at the moment there is nothing to see here in the plain text version :(JSON.stringify(outputObj, null, 2)',
-    html: '<h1>HELLO WORLD!</h1>'
+    html: `<pre>${JSON.stringify(req.body, null, 2)}</pre>`
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
