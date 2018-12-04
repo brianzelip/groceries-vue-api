@@ -28,7 +28,7 @@ exports.submit = (req, res) => {
   });
 
   let mailOptions = {
-    from: '"🤖 groceries-vue" <holler@abbieandbrian.us>',
+    from: '"🤖 groceries-vue 💚" <holler@abbieandbrian.us>',
     to: 'bzelip@gmail.com',
     subject: 'grocery list',
     text:
