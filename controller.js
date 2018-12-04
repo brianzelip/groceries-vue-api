@@ -17,4 +17,29 @@ exports.getAllItems = async (req, res) => {
 exports.submit = (req, res) => {
   console.log('submit fired!');
   console.log('req.body', req.body, '\nreq.route', req.route);
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtpout.secureserver.net',
+    port: 3535,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  let mailOptions = {
+    from: '"🧀 A&B Groceries 🍼" <holler@abbieandbrian.us>',
+    to: 'bzelip@gmail.com',
+    subject: 'grocery list',
+    text:
+      'Sorry, at the moment there is nothing to see here in the plain text version :(JSON.stringify(outputObj, null, 2)',
+    html: '<h1>HELLO WORLD!</h1>'
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+  });
 };
