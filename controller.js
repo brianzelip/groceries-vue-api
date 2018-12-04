@@ -1,3 +1,4 @@
+const nodemailer = require('nodemailer');
 const Item = require('./Item');
 
 exports.home = (req, res) => {
@@ -16,4 +17,29 @@ exports.getAllItems = async (req, res) => {
 exports.submit = (req, res) => {
   console.log('submit fired!');
   console.log('req.body', req.body, '\nreq.route', req.route);
+
+  const transporter = nodemailer.createTransport({
+    host: 'smtpout.secureserver.net',
+    port: 25,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS
+    }
+  });
+
+  let mailOptions = {
+    from: '"🤖 groceries-vue 💚" <holler@abbieandbrian.us>',
+    to: 'bzelip@gmail.com',
+    subject: 'grocery list',
+    text:
+      'Sorry, at the moment there is nothing to see here in the plain text version :(JSON.stringify(outputObj, null, 2)',
+    html: `<pre>${JSON.stringify(req.body, null, 2)}</pre>`
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      return console.log(error);
+    }
+    console.log('Message sent: %s', info.messageId);
+  });
 };
