@@ -80,6 +80,8 @@ exports.test = (req, res) => {
       html: `<h1>HELLO MOTHERFUCKERS!!!</h1>`
     };
 
+    // CHECK ANOTHER EMAIL CLIENT, LIKE GMAIL NEXT
+    // CAUSE THIS SHIT AINT WORKING!!
     transporter.sendMail(message, (error, info) => {
       if (error) {
         console.log('Error occurred');
