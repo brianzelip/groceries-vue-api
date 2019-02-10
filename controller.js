@@ -33,7 +33,7 @@ exports.submit = (req, res) => {
     subject: 'grocery list',
     text:
       'Sorry, at the moment there is nothing to see here in the plain text version :(JSON.stringify(outputObj, null, 2)',
-    html: `<pre>${JSON.stringify(req.body, null, 2)}</pre>`
+    html: req.body.data
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
