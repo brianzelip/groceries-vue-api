@@ -15,8 +15,7 @@ exports.getAllItems = async (req, res) => {
 };
 
 exports.submit = (req, res) => {
-  console.log('submit fired!');
-  console.log('req.body', req.body, '\nreq.route', req.route);
+  const html = req.body.html;
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
@@ -31,9 +30,12 @@ exports.submit = (req, res) => {
     from: '"🤖 groceries-vue 💚" <holler@abbieandbrian.us>',
     to: 'bzelip@gmail.com',
     subject: 'grocery list',
-    text:
-      'Sorry, at the moment there is nothing to see here in the plain text version :(JSON.stringify(outputObj, null, 2)',
-    html: req.body.data
+    text: `Sorry, at the moment there is nothing to see here in the plain text version :( ${JSON.stringify(
+      html,
+      null,
+      2
+    )}`,
+    html
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
