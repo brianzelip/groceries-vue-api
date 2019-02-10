@@ -9,4 +9,6 @@ router.get('/get', catchErrors(controller.getAllItems));
 
 router.post('/submit', controller.submit);
 
+router.get('/test', controller.test);
+
 module.exports = router;
