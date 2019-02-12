@@ -19,7 +19,7 @@ exports.submit = (req, res) => {
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
-    port: 25,
+    port: '3535',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
