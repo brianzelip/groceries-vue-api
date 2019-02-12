@@ -19,7 +19,7 @@ exports.submit = (req, res) => {
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
-    port: 25,
+    port: '3535',
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS
@@ -44,4 +44,58 @@ exports.submit = (req, res) => {
     }
     console.log('Message sent: %s', info.messageId);
   });
+};
+
+exports.test = (req, res) => {
+  nodemailer.createTestAccount((err, account) => {
+    if (err) {
+      console.error('Failed to create a testing account');
+      console.error(err);
+      return process.exit(1);
+    }
+
+    console.log('Credentials obtained, sending message...');
+
+    // NB! Store the account object values somewhere if you want
+    // to re-use the same account for future mail deliveries
+
+    // Create a SMTP transporter object
+    let transporter = nodemailer.createTransport({
+      host: 'smtpout.secureserver.net',
+      port: 25,
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS
+      },
+      logger: true,
+      debug: false // include SMTP traffic in the logs
+    });
+
+    // Message object
+    let message = {
+      from: 'etereal-like-a-motha@me.com',
+      to: 'bzelip@gmail.com',
+      subject: 'etherial list',
+      text: `Heidi Ho from plain text land!`,
+      html: `<h1>HELLO MOTHERFUCKERS!!!</h1>`
+    };
+
+    // CHECK ANOTHER EMAIL CLIENT, LIKE GMAIL NEXT
+    // CAUSE THIS SHIT AINT WORKING!!
+    transporter.sendMail(message, (error, info) => {
+      if (error) {
+        console.log('Error occurred');
+        console.log(error.message);
+        return process.exit(1);
+      }
+
+      console.log('Message sent successfully!');
+      console.log(nodemailer.getTestMessageUrl(info));
+
+      // only needed when using pooled connections
+      transporter.close();
+    });
+  });
+
+  res.send('hello there@!!!!!!!!!');
 };
