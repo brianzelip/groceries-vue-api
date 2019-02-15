@@ -46,4 +46,9 @@ exports.submit = (req, res) => {
   });
 };
 
-exports.createItem = (req, res) => {};
+exports.createItem = async (req, res) => {
+  const item = new Item(req.body.item);
+  await item.save();
+
+  res.send('item saved!');
+};
