@@ -46,9 +46,8 @@ exports.submit = (req, res) => {
   });
 };
 
-exports.createItem = async (req, res) => {
-  const item = new Item(req.body.item);
+exports.createItem = async req => {
+  const item = new Item(req.body);
   await item.save();
-
-  res.send('item saved!');
+  console.log("newItem saved! Here's the data:::\n\n", item);
 };
