@@ -3,8 +3,19 @@
 This document started at v0.5.0.
 
 1. Update a record in the database with data from the [front end](https://github.com/brianzelip/groceries-vue)
+
    - starting point: v0.5.0
+   - starting branch name: update-item
    - ending point: v0.6.0
+   - steps:
+     - new route
+     - new controller
+
+2. Delete an item in the database via the front end
+
+   - starting point: v0.6.0
+   - starting branch: delete-item
+   - ending point: v0.7.0
    - steps:
      - new route
      - new controller
