@@ -49,5 +49,15 @@ exports.submit = (req, res) => {
 exports.createItem = async req => {
   const item = new Item(req.body);
   await item.save();
-  console.log("newItem saved! Here's the data:::\n\n", item);
+  console.log("newItem savedD! Here's the data:::\n\n", item);
+};
+
+exports.updateItem = async req => {
+  const item = await Item.findOneAndUpdate({ _id: req.params._id }, req.body, {
+    runValidators: true //tells findOneAndUpdate to run any required statements
+    // on the form schema in the data model; ie in this case, the store name is
+    // required so if someone submits an edit that removes the store name,
+    // this option will run the validator to catch that problem (plus the trims)
+  }).exec(); //tells mongoose explicitly to run this query
+  console.log('item updated! Heres the saved data::::::', req.body);
 };
