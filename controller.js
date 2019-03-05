@@ -61,3 +61,15 @@ exports.updateItem = async req => {
   }).exec(); //tells mongoose explicitly to run this query
   console.log('item updated! Heres the saved data::::::', req.body);
 };
+
+exports.deleteItem = async req => {
+  const cbHackToExecuteThisMongoMethodImmediately = () => {};
+  // see https://mongoosejs.com/docs/api.html#model_Model.findOneAndDelete
+  const item = await Item.findOneAndDelete(
+    {
+      _id: req.params._id
+    },
+    cbHackToExecuteThisMongoMethodImmediately
+  ).exec(); //tells mongoose explicitly to run this query
+  console.log('item updated! Heres the saved data::::::', req.body);
+};
