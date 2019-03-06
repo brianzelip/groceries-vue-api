@@ -13,4 +13,6 @@ router.post('/create', catchErrors(controller.createItem));
 
 router.post('/edit/:_id', catchErrors(controller.updateItem));
 
+router.post('/delete/:_id', catchErrors(controller.deleteItem));
+
 module.exports = router;
