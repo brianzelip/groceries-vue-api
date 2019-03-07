@@ -31,8 +31,8 @@ exports.submit = (req, res) => {
   });
 
   let mailOptions = {
-    from: '"🤖 groceries-vue 💚" <holler@abbieandbrian.us>',
-    to: 'bzelip@gmail.com',
+    from: '"🤖 A&B Groceries 🍼" <holler@abbieandbrian.us>',
+    to,
     subject: 'grocery list',
     text: `Sorry, at the moment there is nothing to see here in the plain text version :( ${JSON.stringify(
       html,
