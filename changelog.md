@@ -20,4 +20,11 @@ This document started at v0.5.0.
      - new route
      - new controller
 
+3. Send submitted grocery list to the correct email addresses
+   - starting point: v0.7.0
+   - starting branch: handle-email-data
+   - ending point: v0.8.0
+   - steps:
+     - handle email data passed from front end
+
 \* a personal take
