@@ -50,10 +50,17 @@ exports.submit = (req, res) => {
   });
 };
 
-exports.createItem = async req => {
+exports.createItem = async (req, res) => {
   const item = new Item(req.body);
-  await item.save();
-  console.log("newItem savedD! Here's the data:::\n\n", item);
+  await item
+    .save()
+    .then(createdItem => {
+      console.log("newItem savedD! Here's the data:::\n\n", createdItem);
+      return createdItem;
+    })
+    .then(createdItem => {
+      res.send(createdItem);
+    });
 };
 
 exports.updateItem = async req => {
