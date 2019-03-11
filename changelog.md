@@ -21,10 +21,19 @@ This document started at v0.5.0.
      - new controller
 
 3. Send submitted grocery list to the correct email addresses
+
    - starting point: v0.7.0
    - starting branch: handle-email-data
    - ending point: v0.8.0
    - steps:
      - handle email data passed from front end
+
+4. Send created item info response on `post('/create')`
+
+- starting point: v0.8.0
+- starting branch: respond-to-post-create
+- ending point: v0.9.0
+- steps:
+  - send response back before ending create controller
 
 \* a personal take
