@@ -1,3 +1,4 @@
+const fs = require('fs');
 const nodemailer = require('nodemailer');
 const Item = require('./Item');
 
@@ -17,10 +18,10 @@ exports.getAllItems = async (req, res) => {
 exports.submit = (req, res) => {
   const html = req.body.html;
   const recipients = req.body.recipients;
-//   const to = recipients.map(
-//     r => process.env[`${r.slice(0, 1).toUpperCase()}Z`]
-//   );
-  const to = recipients;//this is a hack for rushing groceries-vue out the shipping door
+  //   const to = recipients.map(
+  //     r => process.env[`${r.slice(0, 1).toUpperCase()}Z`]
+  //   );
+  const to = recipients; //this is a hack for rushing groceries-vue out the shipping door
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
@@ -47,7 +48,27 @@ exports.submit = (req, res) => {
     if (error) {
       return console.log(error);
     }
-    console.log('Message sent: %s', info.messageId);
+
+    const now = new Date();
+
+    const entryDate = `${now.getFullYear()}-${now.getMonth() +
+      1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
+    const logEntry = `${entryDate}
+${JSON.stringify(info, null, 2)}
+
+---
+
+`;
+    fs.appendFile('./.data/email.log', logEntry, err => {
+      if (err) throw err;
+      console.log(
+        `The info was appended to .data/sent.log.md 🎉\n\n${JSON.stringify(
+          info,
+          null,
+          2
+        )}`
+      );
+    });
   });
 };
 
