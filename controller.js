@@ -17,9 +17,10 @@ exports.getAllItems = async (req, res) => {
 exports.submit = (req, res) => {
   const html = req.body.html;
   const recipients = req.body.recipients;
-  const to = recipients.map(
-    r => process.env[`${r.slice(0, 1).toUpperCase()}Z`]
-  );
+//   const to = recipients.map(
+//     r => process.env[`${r.slice(0, 1).toUpperCase()}Z`]
+//   );
+  const to = recipients;//this is a hack for rushing groceries-vue out the shipping door
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
