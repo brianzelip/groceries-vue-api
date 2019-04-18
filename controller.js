@@ -50,19 +50,25 @@ exports.submit = (req, res) => {
     }
 
     const now = new Date();
+    const y = `${now.getFullYear()}`;
+    const m = `${now.getFullMonth() + 1}`;
+    const d = `${now.getFullDate()}`;
+    const h = `${now.getHours()}`;
+    const mn = `${now.getMinutes()}`;
+    const s = `${now.getSeconds()}`;
+    const date = `${y}-${m}-${d}`;
+    const time = `${h}:${mn}:${s}`;
 
-    const entryDate = `${now.getFullYear()}-${now.getMonth() +
-      1}-${now.getDate()} ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`;
-    const logEntry = `${entryDate}
-${JSON.stringify(info, null, 2)}
-
----
-
-`;
-    fs.appendFile('./.data/email.log', logEntry, err => {
+    const entry = `${date} ${time}
+  ${JSON.stringify(info, null, 2)}
+  
+  ---
+  
+  `;
+    fs.appendFile('./.data/email.log', entry, err => {
       if (err) throw err;
       console.log(
-        `The info was appended to .data/sent.log.md 🎉\n\n${JSON.stringify(
+        `The email data was appended to .data/sent.log.md 🎉\n\n${JSON.stringify(
           info,
           null,
           2
