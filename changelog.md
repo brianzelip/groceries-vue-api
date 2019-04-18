@@ -1,5 +1,7 @@
 # changelog\*
 
+\* a personal take
+
 This document started at v0.5.0.
 
 1. Update a record in the database with data from the [front end](https://github.com/brianzelip/groceries-vue)
@@ -36,4 +38,11 @@ This document started at v0.5.0.
 - steps:
   - send response back before ending create controller
 
-\* a personal take
+5. Allow for user-input email address on the front end
+
+- starting point: v0.9.0
+- ending point: v0.10.0
+- branch (via github.com not local): custom-email-hack
+- steps: update controller.js
+
+**NOTE**: This was a hack job, and needs to be cleaned up!
