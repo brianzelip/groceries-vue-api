@@ -48,32 +48,27 @@ exports.submit = (req, res) => {
     if (error) {
       return console.log(error);
     }
+    console.log('Message sent!: %s', info.messageId);
 
     const now = new Date();
-    const y = `${now.getFullYear()}`;
-    const m = `${now.getFullMonth() + 1}`;
-    const d = `${now.getFullDate()}`;
-    const h = `${now.getHours()}`;
-    const mn = `${now.getMinutes()}`;
-    const s = `${now.getSeconds()}`;
-    const date = `${y}-${m}-${d}`;
-    const time = `${h}:${mn}:${s}`;
+    const y = now.getFullYear();
+    const m = now.getMonth();
+    const d = now.getDate();
+    const h = now.getHours();
+    const mn = now.getMinutes();
+    const s = now.getSeconds();
+    const timeStamp = `${y}-${m}-${d} ${h}:${mn}:${s}`;
 
-    const entry = `${date} ${time}
-  ${JSON.stringify(info, null, 2)}
-  
-  ---
-  
-  `;
+    const entry = `${timeStamp}
+${JSON.stringify(info, null, 2)}
+
+---
+
+`;
+
     fs.appendFile('./.data/email.log', entry, err => {
       if (err) throw err;
-      console.log(
-        `The email data was appended to .data/sent.log.md 🎉\n\n${JSON.stringify(
-          info,
-          null,
-          2
-        )}`
-      );
+      console.log('email.log updated!');
     });
   });
 };
