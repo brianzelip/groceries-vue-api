@@ -53,6 +53,10 @@ exports.submit = (req, res) => {
     function addLeading0(n) {
       return n < 10 ? `0${n}` : `${n}`;
     }
+
+    function quotes(d) {
+      return typeof d === 'string' ? (d.includes(' ') ? `"${d}"` : d) : d;
+    }
     const now = new Date();
     const y = now.getFullYear();
     const m = now.getMonth();
@@ -72,7 +76,11 @@ exports.submit = (req, res) => {
     const envelopeTo = info.envelope.to;
     const messageId = info.messageId;
 
-    const entry = `${date}, ${time}, ${accepted}, ${rejected}, ${envelopeTime}, ${messageTime}, ${messageSize}, ${response}, ${envelopeTo}, ${messageId}\n`;
+    const entry = `${date}, ${time}, ${accepted}, ${quotes(
+      rejected
+    )}, ${envelopeTime}, ${messageTime}, ${messageSize}, ${quotes(
+      response
+    )}, ${envelopeTo}, ${messageId}\n`;
 
     fs.appendFile('./.data/emails.csv', entry, err => {
       if (err) throw err;
