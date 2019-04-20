@@ -58,3 +58,10 @@ This document started at v0.5.0.
   - the file created is .data/emails.csv
 
 **NOTE**: I'm doing this since I opened up the flood gates by allowing a user to input an email address into a form and send it!
+
+7. Remove the html view
+
+- starting point: v0.11.0
+- ending point: v0.12.0
+- branch: remove-html
+- steps: DELETE FILES! and make sure there's a server response that sends some text
