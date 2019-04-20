@@ -50,6 +50,9 @@ exports.submit = (req, res) => {
     }
     console.log('Message sent!: %s', info.messageId);
 
+    function addLeading0(n) {
+      return n < 10 ? `0${n}` : `${n}`;
+    }
     const now = new Date();
     const y = now.getFullYear();
     const m = now.getMonth();
@@ -57,16 +60,21 @@ exports.submit = (req, res) => {
     const h = now.getHours();
     const mn = now.getMinutes();
     const s = now.getSeconds();
-    const timeStamp = `${y}-${m}-${d} ${h}:${mn}:${s}`;
+    const date = `${y}-${addLeading0(m + 1)}-${addLeading0(d)}`;
+    const time = `${addLeading0(h)}:${addLeading0(mn)}:${addLeading0(s)}`;
 
-    const entry = `${timeStamp}
-${JSON.stringify(info, null, 2)}
+    const accepted = info.accepted;
+    const rejected = info.rejected.length < 1 ? 'none' : info.rejected;
+    const envelopeTime = info.envelopeTime;
+    const messageTime = info.messageTime;
+    const messageSize = info.messageSize;
+    const response = info.response;
+    const envelopeTo = info.envelope.to;
+    const messageId = info.messageId;
 
----
+    const entry = `${date}, ${time}, ${accepted}, ${rejected}, ${envelopeTime}, ${messageTime}, ${messageSize}, ${response}, ${envelopeTo}, ${messageId}\n`;
 
-`;
-
-    fs.appendFile('./.data/email.log', entry, err => {
+    fs.appendFile('./.data/emails.csv', entry, err => {
       if (err) throw err;
       console.log('email.log updated!');
     });
