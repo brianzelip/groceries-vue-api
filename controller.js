@@ -1,3 +1,4 @@
+const fs = require('fs');
 const nodemailer = require('nodemailer');
 const Item = require('./Item');
 
@@ -17,10 +18,10 @@ exports.getAllItems = async (req, res) => {
 exports.submit = (req, res) => {
   const html = req.body.html;
   const recipients = req.body.recipients;
-//   const to = recipients.map(
-//     r => process.env[`${r.slice(0, 1).toUpperCase()}Z`]
-//   );
-  const to = recipients;//this is a hack for rushing groceries-vue out the shipping door
+  //   const to = recipients.map(
+  //     r => process.env[`${r.slice(0, 1).toUpperCase()}Z`]
+  //   );
+  const to = recipients; //this is a hack for rushing groceries-vue out the shipping door
 
   const transporter = nodemailer.createTransport({
     host: 'smtpout.secureserver.net',
@@ -47,7 +48,44 @@ exports.submit = (req, res) => {
     if (error) {
       return console.log(error);
     }
-    console.log('Message sent: %s', info.messageId);
+    console.log('Message sent!: %s', info.messageId);
+
+    function addLeading0(n) {
+      return n < 10 ? `0${n}` : `${n}`;
+    }
+
+    function quotes(d) {
+      return typeof d === 'string' ? (d.includes(' ') ? `"${d}"` : d) : d;
+    }
+    const now = new Date();
+    const y = now.getFullYear();
+    const m = now.getMonth();
+    const d = now.getDate();
+    const h = now.getHours();
+    const mn = now.getMinutes();
+    const s = now.getSeconds();
+    const date = `${y}-${addLeading0(m + 1)}-${addLeading0(d)}`;
+    const time = `${addLeading0(h)}:${addLeading0(mn)}:${addLeading0(s)}`;
+
+    const accepted = info.accepted;
+    const rejected = info.rejected.length < 1 ? 'none' : info.rejected;
+    const envelopeTime = info.envelopeTime;
+    const messageTime = info.messageTime;
+    const messageSize = info.messageSize;
+    const response = info.response;
+    const envelopeTo = info.envelope.to;
+    const messageId = info.messageId;
+
+    const entry = `${date}, ${time}, ${accepted}, ${quotes(
+      rejected
+    )}, ${envelopeTime}, ${messageTime}, ${messageSize}, ${quotes(
+      response
+    )}, ${envelopeTo}, ${messageId}\n`;
+
+    fs.appendFile('./.data/emails.csv', entry, err => {
+      if (err) throw err;
+      console.log('email.log updated!');
+    });
   });
 };
 
