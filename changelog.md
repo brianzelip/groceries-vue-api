@@ -65,3 +65,5 @@ This document started at v0.5.0.
 - ending point: v0.12.0
 - branch: remove-html
 - steps: DELETE FILES! and make sure there's a server response that sends some text
+
+8. Migrate DB, fix vulns, v0.13.0
