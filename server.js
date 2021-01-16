@@ -6,14 +6,23 @@ const routes = require('./routes');
 const cors = require('cors');
 
 // import environmental variables from our variables.env file
-require('dotenv').config({ path: 'variables.env' });
+require('dotenv').config({ path: '.env' });
 
 // Connect to our Database and handle any bad connections
-mongoose.connect(process.env.DATABASE);
-mongoose.Promise = global.Promise; // Tell Mongoose to use ES6 promises
-mongoose.connection.on('error', err => {
-  console.error(`DATABASE CONNECTION ERROR → ${err.message}`);
-});
+mongoose
+  .connect(process.env.DATABASE, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 5000 // Timeout after 5s instead of 30s
+  })
+  .then(
+    () => {
+      console.log('DB CONNECTION SUCCESS!');
+    },
+    (err) => {
+      console.error(`DATABASE CONNECTION ERROR → ${err.message}`);
+    }
+  );
 
 // Takes the raw requests and turns them into usable properties on req.body
 app.use(bodyParser.json());
@@ -24,6 +33,6 @@ app.use(cors());
 app.use('/', routes);
 
 // listen for requests :)
-var listener = app.listen(process.env.PORT, function() {
+var listener = app.listen(process.env.PORT, function () {
   console.log('Your app is listening on port ' + listener.address().port);
 });
